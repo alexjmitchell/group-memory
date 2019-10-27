@@ -10,3 +10,6 @@ let pairs=0
 let timerbonus=0
 let turnbonus=0
 let timerRunning=false
+var startTime = new Date()
+var result = timerbonus + turnbonus
+var outcome =""

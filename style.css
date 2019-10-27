@@ -47,9 +47,10 @@ div.scorepanel ul {
 }
 /* div.scorepanel ul>li{ */
 /* } */
+
 .winnerScreen {
-  width: 85%;
-  height: 700px;
+  width: 55%;
+  height: 250px;
   margin: auto;
   background-color: white;
   display: none;
@@ -68,6 +69,16 @@ div.scorepanel ul {
 }
 
 #fireworks {
-  width: 90%;
+  width: 900px;
   height: 800px;
+  /* background-image:url(); */
+  display:none;
+  top:0;
+  position:absolute;
+  border:1px solid pink;
+}
+
+#fireworks img{
+  width: 900px;
+  height: auto;
 }
