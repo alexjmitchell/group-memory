@@ -95,7 +95,6 @@ function timer() {
 }
 
 
-
 function handleGame() {
   let arrCards = []
   // Handling cards
@@ -107,7 +106,7 @@ function handleGame() {
     // putting values of clicked cards into the array
     //if 2 cards are active, disables you from selecting other cards
     if (!$(this).hasClass("stay")) {
-      //alert($(this).hasClass("stay"))
+
       arrCards.push($(this))
     }
     if (
@@ -121,6 +120,10 @@ function handleGame() {
     }
     if (arrCards.length === 2) {
       turn = turn + 1
+
+      $(".turns").html(`Turns:${turn}`)
+
+
       // if total cards in array are equal to 2 then compare win/lose scenario
       if (arrCards[0].html() != arrCards[1].html()) {
         setTimeout(function() {
@@ -139,11 +142,19 @@ function handleGame() {
         //   $(".stay").attr("disabled", true)
         // }
         arrCards = []
-        if (pairs === 9) {
+
+        if (pairs === 2) {
           //change to 9!
           clearInterval(counter) //to stop interval
+          turnsScore()
           timerscore()
-          turnsScore(turn)
+
+//         if (pairs === 9) {
+//           //change to 9!
+//           clearInterval(counter) //to stop interval
+//           timerscore()
+//           turnsScore(turn)
+
           winnerScreen()
         }
       }
@@ -152,18 +163,16 @@ function handleGame() {
 }
 
 
-
-function getTimeStr(milliseconds) {
-  var minutes = milliseconds / 60000
-  var sec=milliseconds/1000
-  var intMinutes = Math.floor(minutes)
-  var seconds = Math.floor((minutes - intMinutes) * 60)
+function getTimeStr(sec) {
+  var minutes = sec / 60
+  var seconds = Math.floor((minutes - Math.floor(minutes)) * 60)
   return (
-    intMinutes +
+    "0" +  Math.floor(minutes) +
     ":" +
     (seconds < 10 ? "0" + seconds.toFixed(0) : seconds.toFixed(0))
   )
 }
+
 
 function finalscreen(){
   if (result === 9 || result === 10){
@@ -180,13 +189,12 @@ function finalscreen(){
 }
 
 function winnerScreen() {
-  let outc = turnbonus + timerbonus
-  // $(".outcome").html(`turnbonus + timerbonus= ${outc}`)
-
+  result = turnbonus + timerbonus
+ 
   finalscreen()
   
   var finalpage = `<p class="finalpage">
-                   <p> It took you ${sec} seconds.</p>
+                   <p> It took you ${secs} seconds.</p>
                    <p> It to you ${turn} turns </p>
                    <p> Your outcome is: ${outcome}</p>
   `
@@ -196,25 +204,70 @@ function winnerScreen() {
 
   $("#fireworks").show()
   
+   $(".winnerScreen").show() 
+}
+
+function getTimeStr(milliseconds) {
+  var minutes = milliseconds / 60000
+  var sec=milliseconds/1000
+  var intMinutes = Math.floor(minutes)
+  var seconds = Math.floor((minutes - intMinutes) * 60)
+  return (
+    intMinutes +
+    ":" +
+    (seconds < 10 ? "0" + seconds.toFixed(0) : seconds.toFixed(0))
+  )
+}
+
+
+function turnsScore() {
+
+if(turn>=0 && turn<=15)
+{
+    turnbonus=10
+} else if(turn>=25){
+  turnbonus=0
+}
+
+switch (turn)
+{
+  case 16:
+    turnbonus=9;
+    break
+  case 17:
+    turnbonus=8;
+    break
+  case 18:
+    turnbonus=7;
+    break
+  case 19:
+    turnbonus=6;
+    break
+  case 20:
+    turnbonus=5;
+    break
+  case 21:
+    turnbonus=4;
+    break
+  case 22:
+    turnbonus=3;
+    break
+  case 23:
+    turnbonus=2;
+    break
+  case 24:
+    turnbonus=1;
+    break
+                
+}
+
+}
+
+function timerscore() {
+  let howmanysecs =secs 
+  $("#fireworks").show()
+  
    $(".winnerScreen").show()
-
-  // let fireworkTimer = 0
-
-  // let firework = setInterval(function() {
-  //   fireworkTimer=fireworkTimer + 1
-  //   $("#fireworks").fireworks({
-  //     sound: true,
-  //     opacity: 0.9,
-  //     width: "100%",
-  //     height: "100%"
-  //   })
-  // }, 1000)
-
-  // if (fireworkTimer === 5) {
-  //   alert ("firework timer =5")
-  //   clearInterval(firework)
-  //   $("#fireworks").hide()
-  // }
 }
 
 function turnsScore(tu) {
@@ -258,20 +311,19 @@ function turnsScore(tu) {
   }
 }
 
-function timerscore() {
-  let howmanysecs = sec
-  if (howmanysecs < 60) {
-    timerbonus = 3
-  } else if (howmanysecs >= 60 && howmanysecs < 120) {
-    timerbonus = 2
-  } else if (howmanysecs >= 120 && howmanysecs < 180) {
-    timerbonus = 1
-  } else {
-    timerbonus = 0
-  }
-  console.log("timerbonus" + timerbonus)
-  console.log(howmanysecs + " how many Secs")
-}
+// function timerscore() {
+//   let howmanysecs = sec
+
+//   if (howmanysecs < 60) {
+//     timerbonus = 3
+//   } else if (howmanysecs >= 60 && howmanysecs < 120) {
+//     timerbonus = 2
+//   } else if (howmanysecs >= 120 && howmanysecs < 180) {
+//     timerbonus = 1
+//   } else {
+//     timerbonus = 0
+//   }
+
 
 $(document).ready(function() {
   readyDeck(deck)
