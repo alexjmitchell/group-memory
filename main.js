@@ -61,21 +61,37 @@ function readyDeck(deck) {
   deck.forEach(l => {
     buttons += `<button class="face-down">${l.toUpperCase()}</button>`
   })
-  //   deck = shuffle(deck)
+
+  // deck2 = shuffle(deck2)
+
+  // deck2.forEach(l => {
+  //   buttons += `<button class="face-down">${l.toUpperCase()}</button>`
+  // })
+
   $("#buttons").html(buttons)
 }
 function resetGame() {
   document.location.reload(true)
 }
 
+function getTimeStr(milliseconds) {
+  var minutes = milliseconds / 60000
+  var intMinutes = Math.floor(minutes)
+  var seconds = Math.floor((minutes - intMinutes) * 60)
+  return (
+    intMinutes +
+    ":" +
+    (seconds < 10 ? "0" + seconds.toFixed(0) : seconds.toFixed(0))
+  )
+}
+
 function timer() {
   timerRunning = true
-
- counter= setInterval(function() {
-    secs=secs+1
-    
-    $("#timer").html("Time: " + getTimeStr(secs))
-  }, 1000)
+  setInterval(function() {
+    var elapsedTime = Date.now() - startTime
+    $(".timer").html(`Time: ${getTimeStr(elapsedTime)}`)
+    // console.log(getTimeStr(elapsedTime))
+  }, 100)
 }
 
 
@@ -86,12 +102,11 @@ function handleGame() {
     e.preventDefault()
     if (!timerRunning) {
       timer()
-      
     }
     // putting values of clicked cards into the array
     //if 2 cards are active, disables you from selecting other cards
     if (!$(this).hasClass("stay")) {
-      
+
       arrCards.push($(this))
     }
     if (
@@ -105,7 +120,9 @@ function handleGame() {
     }
     if (arrCards.length === 2) {
       turn = turn + 1
+
       $(".turns").html(`Turns:${turn}`)
+
 
       // if total cards in array are equal to 2 then compare win/lose scenario
       if (arrCards[0].html() != arrCards[1].html()) {
@@ -125,11 +142,19 @@ function handleGame() {
         //   $(".stay").attr("disabled", true)
         // }
         arrCards = []
+
         if (pairs === 2) {
           //change to 9!
           clearInterval(counter) //to stop interval
           turnsScore()
           timerscore()
+
+//         if (pairs === 9) {
+//           //change to 9!
+//           clearInterval(counter) //to stop interval
+//           timerscore()
+//           turnsScore(turn)
+
           winnerScreen()
         }
       }
@@ -147,6 +172,7 @@ function getTimeStr(sec) {
     (seconds < 10 ? "0" + seconds.toFixed(0) : seconds.toFixed(0))
   )
 }
+
 
 function finalscreen(){
   if (result === 9 || result === 10){
@@ -178,10 +204,21 @@ function winnerScreen() {
 
   $("#fireworks").show()
   
-   $(".winnerScreen").show()
-
-
+   $(".winnerScreen").show() 
 }
+
+function getTimeStr(milliseconds) {
+  var minutes = milliseconds / 60000
+  var sec=milliseconds/1000
+  var intMinutes = Math.floor(minutes)
+  var seconds = Math.floor((minutes - intMinutes) * 60)
+  return (
+    intMinutes +
+    ":" +
+    (seconds < 10 ? "0" + seconds.toFixed(0) : seconds.toFixed(0))
+  )
+}
+
 
 function turnsScore() {
 
@@ -228,17 +265,65 @@ switch (turn)
 
 function timerscore() {
   let howmanysecs =secs 
-  if (howmanysecs < 60) {
-    timerbonus = 3
-  } else if (howmanysecs >= 60 && howmanysecs < 120) {
-    timerbonus = 2
-  } else if (howmanysecs >= 120 && howmanysecs < 180) {
-    timerbonus = 1
-  } else {
-    timerbonus = 0
-  }
+  $("#fireworks").show()
   
+   $(".winnerScreen").show()
+}
+
+function turnsScore(tu) {
+  switch (tu) {
+    case 15:
+      turnbonus = 10
+      break
+    case 15:
+      turnbonus = 10
+      break
+    case 16:
+      turnbonus = 9
+      break
+    case 17:
+      turnbonus = 8
+      break
+    case 18:
+      turnbonus = 7
+      break
+    case 19:
+      turnbonus = 6
+      break
+    case 20:
+      turnbonus = 5
+      break
+    case 21:
+      turnbonus = 4
+      break
+    case 22:
+      turnbonus = 3
+      break
+    case 23:
+      turnbonus = 2
+      break
+    case 24:
+      turnbonus = 1
+      break
+    default:
+      turnbonus = 0
+      break
   }
+}
+
+// function timerscore() {
+//   let howmanysecs = sec
+
+//   if (howmanysecs < 60) {
+//     timerbonus = 3
+//   } else if (howmanysecs >= 60 && howmanysecs < 120) {
+//     timerbonus = 2
+//   } else if (howmanysecs >= 120 && howmanysecs < 180) {
+//     timerbonus = 1
+//   } else {
+//     timerbonus = 0
+//   }
+
 
 $(document).ready(function() {
   readyDeck(deck)
