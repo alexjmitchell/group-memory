@@ -61,21 +61,37 @@ function readyDeck(deck) {
   deck.forEach(l => {
     buttons += `<button class="face-down">${l.toUpperCase()}</button>`
   })
-  //   deck = shuffle(deck)
+
+  // deck2 = shuffle(deck2)
+
+  // deck2.forEach(l => {
+  //   buttons += `<button class="face-down">${l.toUpperCase()}</button>`
+  // })
+
   $("#buttons").html(buttons)
 }
 function resetGame() {
   document.location.reload(true)
 }
 
+function getTimeStr(milliseconds) {
+  var minutes = milliseconds / 60000
+  var intMinutes = Math.floor(minutes)
+  var seconds = Math.floor((minutes - intMinutes) * 60)
+  return (
+    intMinutes +
+    ":" +
+    (seconds < 10 ? "0" + seconds.toFixed(0) : seconds.toFixed(0))
+  )
+}
+
 function timer() {
   timerRunning = true
-  counter = setInterval(() => {
-    sec = sec + 1
-    // format seconds
-    $(".timer").html(sec)
-    //  console.log(sec)
-  }, 1000)
+  setInterval(function() {
+    var elapsedTime = Date.now() - startTime
+    $(".timer").html(`Time: ${getTimeStr(elapsedTime)}`)
+    // console.log(getTimeStr(elapsedTime))
+  }, 100)
 }
 
 function handleGame() {
@@ -132,30 +148,30 @@ function handleGame() {
     }
   })
 }
-
+let fireworkTimer
 function winnerScreen() {
   let outc = turnbonus + timerbonus
   $(".outcome").html(`turnbonus + timerbonus= ${outc}`)
   $(".winnerScreen").show()
-  let fireworkTimer = 0
-  setInterval(function() {
-    fireworkTimer++
-  }, 1000)
 
-  let firework = setInterval(function() {
-    $("#fireworks").fireworks({
-      sound: true,
-      opacity: 0.9,
-      width: "100%",
-      height: "100%"
-    })
-  }, 500)
+  // setInterval(() => {
+  //   fireworkTimer++
+  // }, 1000)
 
-  if (fireworkTimer === 5) {
-    clearInterval(firework)
-    $("#fireworks").hide()
-  }
+  // let firework = (fireworkTimer = 0)
+  // console.log(fireworkTimer)
+  // $("#fireworks").fireworks({
+  //   sound: true,
+  //   opacity: 0.9,
+  //   width: "100%",
+  //   height: "100%"
+  // })
+
+  // if (fireworkTimer === 5) {
+  //   $("#fireworks").hide(firework)
+  // }
 }
+
 function turnsScore(tu) {
   switch (tu) {
     case 15:
