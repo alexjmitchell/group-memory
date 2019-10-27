@@ -94,6 +94,8 @@ function timer() {
   }, 100)
 }
 
+
+
 function handleGame() {
   let arrCards = []
   // Handling cards
@@ -137,7 +139,7 @@ function handleGame() {
         //   $(".stay").attr("disabled", true)
         // }
         arrCards = []
-        if (pairs === 2) {
+        if (pairs === 9) {
           //change to 9!
           clearInterval(counter) //to stop interval
           timerscore()
@@ -148,27 +150,70 @@ function handleGame() {
     }
   })
 }
-let fireworkTimer
+
+
+
+function getTimeStr(milliseconds) {
+  var minutes = milliseconds / 60000
+  var sec=milliseconds/1000
+  var intMinutes = Math.floor(minutes)
+  var seconds = Math.floor((minutes - intMinutes) * 60)
+  return (
+    intMinutes +
+    ":" +
+    (seconds < 10 ? "0" + seconds.toFixed(0) : seconds.toFixed(0))
+  )
+}
+
+function finalscreen(){
+  if (result === 9 || result === 10){
+    outcome="Amazing"
+   } else if (result === 7 || result === 8){
+    outcome="Great Job"
+   } else if (result === 5 || result === 6){
+    outcome="Not Bad"
+   } else if (result === 3 || result === 4){
+    outcome="Pretty Bad"
+   } else if (result < 3){
+    outcome="You Suck!"
+   }
+}
+
 function winnerScreen() {
   let outc = turnbonus + timerbonus
-  $(".outcome").html(`turnbonus + timerbonus= ${outc}`)
-  $(".winnerScreen").show()
+  // $(".outcome").html(`turnbonus + timerbonus= ${outc}`)
 
-  // setInterval(() => {
-  //   fireworkTimer++
+  finalscreen()
+  
+  var finalpage = `<p class="finalpage">
+                   <p> It took you ${sec} seconds.</p>
+                   <p> It to you ${turn} turns </p>
+                   <p> Your outcome is: ${outcome}</p>
+  `
+  $(".winnerScreen").html(finalpage)
+  
+  
+
+  $("#fireworks").show()
+  
+   $(".winnerScreen").show()
+
+  // let fireworkTimer = 0
+
+  // let firework = setInterval(function() {
+  //   fireworkTimer=fireworkTimer + 1
+  //   $("#fireworks").fireworks({
+  //     sound: true,
+  //     opacity: 0.9,
+  //     width: "100%",
+  //     height: "100%"
+  //   })
   // }, 1000)
 
-  // let firework = (fireworkTimer = 0)
-  // console.log(fireworkTimer)
-  // $("#fireworks").fireworks({
-  //   sound: true,
-  //   opacity: 0.9,
-  //   width: "100%",
-  //   height: "100%"
-  // })
-
   // if (fireworkTimer === 5) {
-  //   $("#fireworks").hide(firework)
+  //   alert ("firework timer =5")
+  //   clearInterval(firework)
+  //   $("#fireworks").hide()
   // }
 }
 
@@ -226,7 +271,6 @@ function timerscore() {
   }
   console.log("timerbonus" + timerbonus)
   console.log(howmanysecs + " how many Secs")
-  console.log("secs " + sec)
 }
 
 $(document).ready(function() {
