@@ -61,19 +61,36 @@ function readyDeck(deck) {
   deck.forEach(l => {
     buttons += `<button class="face-down">${l.toUpperCase()}</button>`
   })
-  //   deck = shuffle(deck)
+
+  // deck2 = shuffle(deck2)
+
+  // deck2.forEach(l => {
+  //   buttons += `<button class="face-down">${l.toUpperCase()}</button>`
+  // })
+
   $("#buttons").html(buttons)
 }
 function resetGame() {
   document.location.reload(true)
 }
 
+function getTimeStr(milliseconds) {
+  var minutes = milliseconds / 60000
+  var intMinutes = Math.floor(minutes)
+  var seconds = Math.floor((minutes - intMinutes) * 60)
+  return (
+    intMinutes +
+    ":" +
+    (seconds < 10 ? "0" + seconds.toFixed(0) : seconds.toFixed(0))
+  )
+}
+
 function timer() {
   timerRunning = true
-
   setInterval(function() {
     var elapsedTime = Date.now() - startTime
-    $("#timer").html("Time: " + getTimeStr(elapsedTime))
+    $(".timer").html(`Time: ${getTimeStr(elapsedTime)}`)
+    // console.log(getTimeStr(elapsedTime))
   }, 100)
 }
 
@@ -133,6 +150,7 @@ function handleGame() {
     }
   })
 }
+
 
 
 function getTimeStr(milliseconds) {
